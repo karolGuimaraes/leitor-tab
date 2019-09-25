@@ -1,0 +1,7 @@
+{% load l10n %}
+
+{% if acao == 0 %}
+    <div class="alert alert-primary" role="alert">Renda R$ {{ revenue|floatformat:2 }}</div>
+{% else %}
+    <div class="alert alert-danger" role="alert">{{ menssage }}</div>
+{% endif %}

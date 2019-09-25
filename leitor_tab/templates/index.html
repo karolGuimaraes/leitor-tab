@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+		<meta charset="utf-8">
+		<title>Sales</title>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<meta content="" name="keywords">
+		<meta content="" name="description">
+
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+		<link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+		<link href="/static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link href="/static/lib/animate/animate.min.css" rel="stylesheet">
+		<link href="/static/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+
+		<link href="/static/css/style.css" rel="stylesheet">
+    </head>
+
+	<body id="body">
+		<header id="header">
+			<div class="container">
+				<div id="logo" class="pull-left">
+					<h1><a href="#body" class="scrollto"><i class="fa fa-dollar"></i></a></h1>
+				</div>
+			</div>
+		</header>
+
+		<section id="intro">
+			<div class="intro-content">
+				<h2>Importar Vendas</h2>
+				
+				<div id="divRetorno">
+
+				</div>
+				
+				<div>
+					<form>
+						<div class="form-group">
+							{% csrf_token %}
+							<input type="file" class="form-control-file" id="arquivo" accept=".tab">
+						</div>
+					</form>
+				</div>
+				<div>
+					<button type="button" id="importar_arquivo" class="btn-get-started scrollto" data-loading-text="Loading..." >Importar</button>
+				</div>
+			</div>
+		</section>
+
+		<script src="/static/lib/jquery/jquery.min.js"></script>
+		<script src="/static/lib/jquery/jquery-migrate.min.js"></script>
+		<script src="/static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="/static/lib/easing/easing.min.js"></script>
+		<script src="/static/lib/wow/wow.min.js"></script>
+		<script src="/static/js/main.js"></script>
+
+		<script>
+			$( "#importar_arquivo" ).click(function() {
+				$("#divRetorno").html('');
+				var csrfmiddlewaretoken = $('[name=csrfmiddlewaretoken]').val();
+				var file = $("#arquivo")[0].files[0];
+				var fd = new FormData();
+				fd.append('file_upload', file);
+				fd.append('csrfmiddlewaretoken', csrfmiddlewaretoken);
+				$.ajax({
+					url: '/importar',
+					type: 'POST',
+					data: fd,
+					dataType: 'html',
+					mimeType:"multipart/form-data",
+					contentType: false,
+					cache: false,
+					processData:false,
+					success: function(result_data) {
+						$("#divRetorno").html(result_data);
+					},
+					failure: function(data) {
+						$("#divRetorno").html('<div class="alert alert-danger" role="alert">Internal Server Error</div>');
+					},
+					statusCode: {
+						500: function() {
+							$("#divRetorno").html('<div class="alert alert-danger" role="alert">Internal Server Error</div>');
+						},
+						404: function() {
+							$("#divRetorno").html('<div class="alert alert-danger" role="alert">Not Found/div>');
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
