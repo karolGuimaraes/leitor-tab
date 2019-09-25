@@ -1,7 +1,7 @@
 # leitor-tab
 Interface que permite a leitura de um arquivo .tab
 
-# Configurando
+## Configurando
  - Clonar o projeto: git clone https://github.com/karolGuimaraes/leitor-tab
  - ` python3 -m venv env` ( Criar um ambiente virtual )
  - ` source env/bin/activate ` ( Iniciar o ambiente virtual )
