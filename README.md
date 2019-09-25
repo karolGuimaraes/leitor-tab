@@ -13,7 +13,7 @@ Interface que permite a leitura de um arquivo .tab
 
 ### Teste 
 
-Para executa os teste unitários: 
+Para executa os testes unitários: 
 
 ` python manage.py test `
 
