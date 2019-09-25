@@ -6,6 +6,7 @@ Interface que permite a leitura de um arquivo .tab
  - ` python3 -m venv env` ( Criar um ambiente virtual )
  - ` source env/bin/activate ` ( Iniciar o ambiente virtual )
  - Acesse a pasta /leitor-tab
+ - ` pip install -r requirements.txt ` ( Instalando dependências )
  - ` python manage.py makemigrations && python manage.py migrate `
  - Para executar o projeto ` python manage.py runserver `
  - Acessar : ` localhost:8000 `
