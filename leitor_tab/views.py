@@ -11,18 +11,23 @@ def importar_arquivo(request):
     revenue = 0
     if file_upload:
         try:
-            file = read_csv(str(file_upload), delimiter='\t')
-            for sale in file.values:
-                Sale.objects.create(purchaser_name = sale[0], 
-                                    item_description = sale[1], 
-                                    item_price = sale[2], 
-                                    purchase_count = sale[3], 
-                                    merchant_address = sale[4], 
-                                    merchant_name = sale[5])
+            if file_upload.size > 0:
+                file = read_csv(file_upload, delimiter='\t')
+                if file.size > 0:
+                    for sale in file.values:
+                        Sale.objects.create(purchaser_name = sale[0], 
+                                            item_description = sale[1], 
+                                            item_price = sale[2], 
+                                            purchase_count = sale[3], 
+                                            merchant_address = sale[4], 
+                                            merchant_name = sale[5])
 
-                revenue += int(sale[3]) * Decimal(sale[2])
-                
-            return render(request, 'retorno.html', {'acao': 0, 'revenue': revenue, 'menssage':'ok', 'status': 200 })
+                        revenue += int(sale[3]) * Decimal(sale[2])
+                    return render(request, 'retorno.html', {'acao': 0, 'revenue': revenue, 'menssage':'ok', 'status': 200 })
+                else:
+                    return render(request, 'retorno.html', {'acao': -1, 'menssage':'Arquivo vazio.', 'status': 400})
+            else:
+                return render(request, 'retorno.html', {'acao': -1, 'menssage':'Arquivo vazio.', 'status': 400})
         except Exception as error:
            return render(request, 'retorno.html', {'acao': -1, 'menssage': error, 'status': 500 })
     else:
